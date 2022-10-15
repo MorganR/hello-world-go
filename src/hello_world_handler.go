@@ -10,6 +10,7 @@ import (
 
 const maxNameLength = 100
 
+// HelloWorldHandler provides a greeting, using the optional "name" query parameter.
 type HelloWorldHandler struct{}
 
 func (h HelloWorldHandler) ServeHTTP(w http.ResponseWriter, req *http.Request) {

@@ -15,4 +15,5 @@ RUN go build -o /server .
 FROM alpine:latest
 WORKDIR /app
 COPY --from=serverbuild /server ./
+COPY --from=serverbuild /app/src/static ./static
 ENTRYPOINT ["./server"]

@@ -13,6 +13,7 @@ func main() {
 	}
 
 	http.Handle("/hello", HelloWorldHandler{})
+	http.Handle("/static/", StaticFileServer{})
 
 	log.Printf("Serving on port: %v", port)
 	log.Fatal(http.ListenAndServe(":"+port, nil))
