@@ -1,6 +1,11 @@
 package main
 
-import "net/http"
+import (
+	"log"
+	"net/http"
+
+	"github.com/andybalholm/brotli"
+)
 
 type HelloWorldHandler struct{}
 
@@ -13,5 +18,14 @@ func (h HelloWorldHandler) ServeHTTP(w http.ResponseWriter, req *http.Request) {
 	}
 
 	w.Header().Add("Content-Type", "text/plain")
-	w.Write([]byte("Hello, " + name + "!"))
+
+	compressor := brotli.HTTPCompressor(w, req)
+	compressor.Write([]byte("Hello, " + name + "!"))
+
+	err := compressor.Close()
+	if err != nil {
+		log.Printf("Failed to close compressor: %v", err.Error())
+		w.WriteHeader(http.StatusInternalServerError)
+		return
+	}
 }
