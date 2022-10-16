@@ -24,7 +24,7 @@ func (h HelloWorldHandler) ServeHTTP(w http.ResponseWriter, req *http.Request) {
 		return
 	}
 
-	w.Header().Add("Content-Type", "text/plain")
+	w.Header().Add("Content-Type", "text/plain; charset=utf-8")
 
 	compressor := brotli.HTTPCompressor(w, req)
 	compressor.Write([]byte("Hello, " + name + "!"))
