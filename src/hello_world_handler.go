@@ -8,7 +8,7 @@ import (
 	"github.com/andybalholm/brotli"
 )
 
-const maxNameLength = 100
+const maxNameLength = 500
 
 // HelloWorldHandler provides a greeting, using the optional "name" query parameter.
 type HelloWorldHandler struct{}
