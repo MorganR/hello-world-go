@@ -12,7 +12,8 @@ func main() {
 		port = portEnv
 	}
 
-	http.Handle("/hello", HelloWorldHandler{})
+	http.Handle("/strings/hello", HelloWorldHandler{})
+	http.Handle("/strings/async-hello", AsyncHelloWorldHandler{})
 	http.Handle("/static/", StaticFileServer{})
 
 	log.Printf("Serving on port: %v", port)
