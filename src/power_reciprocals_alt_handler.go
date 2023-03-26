@@ -11,10 +11,15 @@ type PowerReciprocalsAltHandler struct{}
 func (h PowerReciprocalsAltHandler) ServeHTTP(w http.ResponseWriter, req *http.Request) {
 	qParams := req.URL.Query()
 
-	n, err := strconv.ParseInt(qParams.Get("n"), 10, 64)
-	if err != nil {
-		http.Error(w, "Could not parse param n as an int", http.StatusBadRequest)
-		return
+	nStr := qParams.Get("n")
+	n := int64(0)
+	if nStr != "" {
+		var err error
+		n, err = strconv.ParseInt(qParams.Get("n"), 10, strconv.IntSize)
+		if err != nil {
+			http.Error(w, "Could not parse param n as an int", http.StatusBadRequest)
+			return
+		}
 	}
 
 	result := float64(0.0)

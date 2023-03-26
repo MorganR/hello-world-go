@@ -13,19 +13,23 @@ type LinesHandler struct{}
 func (h LinesHandler) ServeHTTP(w http.ResponseWriter, req *http.Request) {
 	qParams := req.URL.Query()
 
-	n64, err := strconv.ParseInt(qParams.Get("n"), 10, strconv.IntSize)
-	if err != nil {
-		http.Error(w, "Could not parse param n as an int", http.StatusBadRequest)
-		return
+	nStr := qParams.Get("n")
+	n := 0
+	if nStr != "" {
+		n64, err := strconv.ParseInt(qParams.Get("n"), 10, strconv.IntSize)
+		if err != nil {
+			http.Error(w, "Could not parse param n as an int", http.StatusBadRequest)
+			return
+		}
+		n = int(n64)
 	}
-	n := int(n64)
 
-	tags := make([]string, 0, n+2)
-	tags = append(tags, "<ol>")
+	tags := strings.Builder{}
+	tags.WriteString("<ol>\n")
 	for i := 1; i <= n; i++ {
-		tags = append(tags, fmt.Sprintf("  <li>Item number: %v</li>", i))
+		tags.WriteString(fmt.Sprintf("  <li>Item number: %v</li>\n", i))
 	}
-	tags = append(tags, "</ol>")
+	tags.WriteString("</ol>")
 	w.Header().Add("Content-Type", "text/html; charset=utf-8")
-	MaybeCompress(w, req, []byte(strings.Join(tags, "\n")))
+	MaybeCompress(w, req, []byte(tags.String()))
 }
