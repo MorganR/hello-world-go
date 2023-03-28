@@ -16,4 +16,5 @@ FROM alpine:latest
 WORKDIR /app
 COPY --from=serverbuild /server ./
 COPY --from=serverbuild /app/src/static ./static
+ENV GOMEMLIMIT=100MiB
 ENTRYPOINT ["./server"]
