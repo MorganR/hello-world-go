@@ -5,7 +5,7 @@ import (
 	"strconv"
 )
 
-// PowerReciprocalsAltHandler computes a convergent series.
+// PowerReciprocalsAltHandler computes a convergent series with "n" terms.
 type PowerReciprocalsAltHandler struct{}
 
 func (h PowerReciprocalsAltHandler) ServeHTTP(w http.ResponseWriter, req *http.Request) {
@@ -22,8 +22,8 @@ func (h PowerReciprocalsAltHandler) ServeHTTP(w http.ResponseWriter, req *http.R
 		}
 	}
 
-	result := float64(0.0)
-	power := float64(0.5)
+	result := 0.0
+	power := 0.5
 	for i := int64(0); i < n; i++ {
 		power *= 2
 		result += 1 / power

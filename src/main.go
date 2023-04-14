@@ -16,6 +16,7 @@ func main() {
 	http.Handle("/strings/async-hello", AsyncHelloWorldHandler{})
 	http.Handle("/strings/lines", LinesHandler{})
 	http.Handle("/math/power-reciprocals-alt", PowerReciprocalsAltHandler{})
+	// Serve static files for all paths under "/static/".
 	http.Handle("/static/", StaticFileServer{})
 
 	log.Printf("Serving on port: %v", port)

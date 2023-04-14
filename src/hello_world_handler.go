@@ -25,6 +25,5 @@ func (h HelloWorldHandler) ServeHTTP(w http.ResponseWriter, req *http.Request) {
 	}
 
 	w.Header().Add("Content-Type", "text/plain; charset=utf-8")
-
 	MaybeCompress(w, req, greeting)
 }
