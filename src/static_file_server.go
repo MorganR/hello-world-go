@@ -10,6 +10,8 @@ import (
 	"os"
 	"path"
 	"strings"
+
+	"golang.org/x/exp/slices"
 )
 
 // StaticFileServer for serving static content. It looks for files using the URL's path, relative
@@ -92,8 +94,10 @@ func acceptsBrotli(headers http.Header) bool {
 	return false
 }
 
+var compressibleMimeTypes = []string{"application/json", "application/ld+json", "application/xml", "image/svg+xml"}
+
 func couldBeBrotli(mimeType string) bool {
-	return strings.HasPrefix(mimeType, "text/") || strings.HasPrefix(mimeType, "application/")
+	return strings.HasPrefix(mimeType, "text/") || slices.Contains(compressibleMimeTypes, mimeType)
 }
 
 // writeFile writes the files data into the ResponseWriter.
